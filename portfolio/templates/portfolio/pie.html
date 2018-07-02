@@ -1,0 +1,47 @@
+<script>
+require(['c3', 'jquery'], function (c3, $) {
+    $(document).ready(function () {
+        var chart = c3.generate({
+            bindto: '#chart-pie', // id of chart wrapper
+            data: {
+                columns: [
+                    // each columns data
+                    ['data1', {{usStockPct}}],
+                    ['data2', {{worldStockPct}}],
+                    ['data3', {{emerStockPct}}],
+                    ['data4', {{sectorStockPct}}],
+                    ['data5', {{usBondPct}}],
+                    ['data6', {{worldBondPct}}]
+                ],
+                type: 'pie', // default type of chart
+                colors: {
+                    'data1': tabler.colors["blue-light"],
+                    'data2': tabler.colors["blue"],
+                    'data3': tabler.colors["red"],
+                    'data4': tabler.colors["pink"],
+                    'data5': tabler.colors["green"],
+                    'data6': tabler.colors["green-light"]
+                },
+                names: {
+                    // name of each serie
+                    'data1': 'US Stock',
+                    'data2': 'World Stock',
+                    'data3': 'Emerging Market Stock',
+                    'data4': 'Sector Stock',
+                    'data5': 'US Bond',
+                    'data6': 'World Bond'
+                }
+            },
+            axis: {
+            },
+            legend: {
+                show: true, //hide legend
+            },
+            padding: {
+                bottom: 0,
+                top: 0
+            },
+        });
+    });
+});
+</script>

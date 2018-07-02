@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Portfolio Forecast</h3>
+  </div>
+  <div class="card-body">
+    <div id="chart-wrapper2" style="height: 16rem"></div>
+  </div>
+</div>
+<script>
+  require(['c3', 'jquery'], function (c3, $) {
+    $(document).ready(function () {
+      var chart = c3.generate({
+        bindto: '#chart-wrapper2', // id of chart wrapper
+        data: {
+          columns: [['data1'
+            {% for i in chartdata %},{{i}}{% endfor %}
+            ],],
+            // each columns data
+            
+          labels: false,
+          type: 'line', // default type of chart
+          colors: {'data1': tabler.colors["blue"]},
+          names: {'data1': 'Net'}
+        },
+        axis: {
+          x: {
+            type: 'category',
+            // name of each category
+            categories: []
+          },
+        },
+        legend: {
+          show: false, //hide legend
+        },
+        padding: {
+          bottom: 0,
+          top: 0
+        },
+      });
+    });
+  });
+</script>

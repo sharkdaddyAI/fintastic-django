@@ -1,0 +1,43 @@
+<!-- 此為管理帳密頁面 -->
+{% extends 'base.html'%} {% block content %}
+<a href="{% url 'member:create' %}" class="btn btn-primary mb-3">
+    <i class="fa fa-plus-circle" aria-hidden="true"></i> 會員新增</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>帳號</th>
+            <th>密碼</th>
+            <th>姓名</th>
+            <th>電話</th>
+            <th>郵件</th>
+            <th>生日</th>
+            <th>會員狀態</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 用for迴圈將views.py定義的members依欄位顯示(隱藏password) -->
+        {% for member in members %}
+        <tr>
+            <td>{{ member.id }}</td>
+            <td>{{ member.account }}</td>
+            <td>{{ member.password }}</td>
+            <td>{{ member.name }}</td>
+            <td>{{ member.cellphone }}</td>
+            <td>{{ member.email }}</td>
+            <td>{{ member.birth }}</td>
+            <td>{{ member.grade }}</td>
+            <td>
+                <!-- 修改按鈕會導向update的url因為在url表定義後面必須加上int才會使用views的update方法,所以
+                後面必須加上這個項目欄位的id -->
+                {% if member.account != 'aicoco' %}
+                <a href="{% url 'member:update' member.account %}" class="btn btn-info mr-2">修改</a>
+                <!-- 刪除同修改原理 -->
+                <a href="{% url 'member:index_delete' member.account %}" class="btn btn-danger">刪除</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,47 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Portfolio Backtesting</h3>
+  </div>
+  <div class="card-body">
+    <div id="chart-wrapper" style="height: 16rem"></div>
+  </div>
+</div>
+<script>
+require(['c3', 'jquery'], function(c3, $) {
+  $(document).ready(function(){
+    var chart = c3.generate({
+      bindto: '#chart-wrapper', // id of chart wrapper
+      data: {
+        columns: [['data1'
+            {% for i in final %},{{i}}{% endfor %}
+            ],],
+        labels: false,
+        type: 'line', // default type of chart
+        colors: { 
+          'data1': tabler.colors["blue"],
+          
+        },
+        names: {
+            // name of each serie
+          'data1': 'net',
+          
+        }
+      },
+      axis: {
+        x: {
+          type: 'category',
+          // name of each category
+          categories: []
+        },
+      },
+      legend: {
+                show: false, //hide legend
+      },
+      padding: {
+        bottom: 0,
+        top: 0
+      },
+    });
+  });
+});
+</script>

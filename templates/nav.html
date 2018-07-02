@@ -1,0 +1,64 @@
+{% load static %}
+              <div class="col-lg order-lg-first">
+                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                  <li class="nav-item">
+                    <!--a href="{% url 'root:index' %}" class="nav-link active"><i class="fe fe-home"></i> 首頁</a-->
+                    <a href="{% url 'root:index' %}" class="nav-link"><i class="fe fe-home"></i> 首頁</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i> 會員專區</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="{% url 'member:create' %}" class="dropdown-item ">新增帳戶</a>
+                      {% if request.COOKIES.account == 'aicoco' %}
+                      <a href="{% url 'member:index' request.COOKIES.account %}" class="dropdown-item ">管理員專區</a>
+                      {% elif request.COOKIES.account %}
+                      <a href="{% url 'member:space' request.COOKIES.account %}" class="dropdown-item ">會員空間</a>
+                      {% else %}
+                      <a></a>
+                      {% endif %}
+                      {% if request.COOKIES.account %}
+                      <a href="{% url 'member:logout' %}" class="dropdown-item ">帳戶登出</a>
+                      {% else %}
+                      <a href="{% url 'member:grade' %}" class="dropdown-item ">email驗證</a>
+                      <a href="{% url 'member:login' %}" class="dropdown-item ">帳戶登入</a>
+                      {% endif %}
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i> 顧問陣容</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="{% url 'consultant:index' %}" class="dropdown-item ">顧問陣容</a>
+                      <a href="{% url 'consultant:create' %}" class="dropdown-item ">管理者新增顧問資料</a>   
+                    </div>
+                  </li>            
+                  <li class="nav-item dropdown">
+                    <a href="{% url 'trastrasim:companyinfo' %}" class="nav-link" data-toggle="dropdown"><i class="fe fe-check-square"></i> 交易策略</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="{% url 'trastrasim:companyinfo' %}" class="dropdown-item ">交易策略</a>
+                      <!-- <a href="{% url 'trastrasim:companyupdate' %}" class="dropdown-item ">更新公司列表(將CSV擋讀入DB)</a> -->
+                      <!-- <a href="{% url 'trastrasim:dailyupdate' %}" class="dropdown-item ">更新股價(注意:會連上網爬資料)</a> -->
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a href="{% url 'portfolio:index' %}" class="nav-link"><i class="fe fe-image"></i>AI投資組合</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i> 投資講座</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="{% url 'root:__empty' %}" class="dropdown-item ">功能一</a>
+                      <a href="{% url 'root:__empty' %}" class="dropdown-item ">功能二</a>
+                    </div>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{% url 'root:__empty' %}" class="nav-link"><i class="fe fe-file-text"></i> 關於我們</a>
+                  </li>
+                  <!--
+                  <li class="nav-item">
+                    <a href="{% static 'tabler/gallery.html' %}" class="nav-link"><i class="fe fe-image"></i> Gallery</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{% url 'root:__empty' %}" class="nav-link"><i class="fe fe-file-text"></i> Documentation</a>
+                  </li>
+                  -->
+                </ul>
+              </div>
