@@ -7,5 +7,7 @@ urlpatterns = [
     path('detail/', views.detail, name='detail'),
     path('result/', views.result, name='result'),
     path('analyze/', views.analyze, name='analyze'),
-    path('delete/', views.delete, name='delete')
+    path('delete/', views.delete, name='delete'),
+    path('chart/', views.chart, name='chart'),
+    path('top20/', views.top20, name='chart')
 ]
