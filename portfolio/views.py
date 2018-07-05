@@ -229,34 +229,27 @@ def chart(request):
     # 將「證券代號」的欄位改名成「stock_id」
     df = df.rename(columns={'證券代號':'stock_id'})
     # 將 「stock_id」與「date」設定成index 
-    df = df.set_index(['stock_id', 'date'])
+    df = df.set_index('stock_id')
     # 將所有的表格元素都轉換成數字，error='coerce'的意思是說，假如無法轉成數字，則用 NaN 取代
     df = df.apply(lambda s:pd.to_numeric(s, errors='coerce'))
     # 刪除不必要的欄位
     df = df[df.columns[df.isnull().all() == False]]
+    return HttpResponse(df.to_json(force_ascii=False), content_type = 'application/json')
 
-    # data = df.dumps(df, ensure_ascii=False).encode('utf8')
-
-    # data = serializers.serialize("json", Drivelesscar.objects.all())
-    # data = df.to_json(force_ascii=False)
-    # print(data)
-    # return JsonResponse(df.to_json(force_ascii=False), content_type = 'application/json', charset='UTF-8' ,safe=False)
-    # return HttpResponse(df.to_json(force_ascii=False), content_type = "'application/json'; charset='UTF-8'")
-    
-    # df.to_json > Convert the object to a JSON string.
-    data = df.to_json(force_ascii=False)
-    print(data)
-    return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
 
 def top20(request):
     r = requests.get('http://www.twse.com.tw/exchangeReport/MI_INDEX20?response=json&date=&_=1530700673269')
-    print("=========== r: {}".format(r))
-    print("=========== r type: {}".format(type(r)))
+    #將JSON變成Python物件，obj變dict, array變list, String變str; 刪除所有","
     s = json.loads(r.text)
-    print("=========== s: {}".format(s['data']))
-    print("=========== s type: {}".format(type(s)))
+    print("=========== df: {}".format(s))
     df = pd.DataFrame(s['data'], columns=s['fields'])
-    print("=========== df: {}".format(df))
-    print("=========== df type: {}".format(type(df)))
-    data = df.to_json(force_ascii=False)
-    return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
+    #將"排名"設為index
+    df = df.set_index(["排名"])
+    #並資料中的逗號刪除
+    df = df.apply(lambda s: s.str.replace(',', ''))
+    df.drop(columns=["成交筆數","漲跌(+/-)","漲跌價差","最後揭示買價"] , inplace=True)
+    # df.drop(labels="成交筆數" , axis=1, inplace=True)
+    # print("=========== df: {}".format(df))
+    return HttpResponse(df.to_json(force_ascii=False), content_type="application/json")
+    # 下面這行會出現許多\
+    # return JsonResponse(df.to_json(force_ascii=False), content_type="application/json", safe=False)
