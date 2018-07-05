@@ -250,8 +250,13 @@ def chart(request):
 
 def top20(request):
     r = requests.get('http://www.twse.com.tw/exchangeReport/MI_INDEX20?response=json&date=&_=1530700673269')
-    print(r)
-    df = pd.read_json(r.text)
-    print(df)
+    print("=========== r: {}".format(r))
+    print("=========== r type: {}".format(type(r)))
+    s = json.loads(r.text)
+    print("=========== s: {}".format(s['data']))
+    print("=========== s type: {}".format(type(s)))
+    df = pd.DataFrame(s['data'], columns=s['fields'])
+    print("=========== df: {}".format(df))
+    print("=========== df type: {}".format(type(df)))
     data = df.to_json(force_ascii=False)
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
