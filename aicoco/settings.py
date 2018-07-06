@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'consultant',
     'rest_framework',
     'favorite',
+    'chart'
 ]
 
 MIDDLEWARE = [

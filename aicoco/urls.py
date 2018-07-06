@@ -32,6 +32,7 @@ urlpatterns = [
     path('member/',include('member.urls')),
     path('consultant/',include('consultant.urls')),
     path('favorite/', include('favorite.urls')),
+    path('chart/', include('chart.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls))
 ]+static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
